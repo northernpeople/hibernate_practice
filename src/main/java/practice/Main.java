@@ -41,20 +41,13 @@ public class Main {
         fetchAllContacts().stream().forEach(System.out::println);
         
         
-        sessionFactory.openSession().close();
-    }
+System.out.println("karamba");
+}
 
     private static Contact findContactById(long id) {
-        // Open a session
         Session session = sessionFactory.openSession();
-
-        // Retrieve the persistent object (or null if not found)
         Contact contact = session.get(Contact.class,id);
-
-        // Close the session
         session.close();
-
-        // Return the object
         return contact;
     }
 
