@@ -1,26 +1,23 @@
 package practice.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Contact {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)	
+	private Long id;
 	private String name;
 	private String phone;
 	
-	
-	/*
-	 * @ElementCollection is lazy loaded by default.
-	 * With lazy loading, we cannot access addresses when session is closed.
-	 * With eager loading, addresses are loaded when session is open, and can accessed when it is closed.
-	 */
-	@ElementCollection(fetch= FetchType.EAGER)
-	private List<Address> addresses = new ArrayList<>();
+	@ManyToOne
+	private  Address address;
 	
 	public Contact() {}
 	
@@ -42,12 +39,13 @@ public class Contact {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public List<Address> getAddresses() {
-		return addresses;
+
+	public Address getAddress() {
+		return address;
 	}
 
-	public void setAddresses(List<Address> addresses) {
-		this.addresses = addresses;
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 	@Override

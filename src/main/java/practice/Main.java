@@ -23,37 +23,24 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Contact contact = new Contact();
+        
+    	Contact contact = new Contact();
         contact.setName("John");
+        contact.setId(save(contact));
+        
         Address a = new Address("2345 Amsterdam ave.");
-        Address b = new Address("asdfas2123451234 m ave.");
-        contact.getAddresses().add(a);
-        contact.getAddresses().add(b);
-        long id = save(contact);
+        a.setId(save(a));
         
-        System.out.println("__________________________" +  fetchAllContacts().size());
-
-        fetchAllContacts().stream().forEach(System.out::println);
-
-        System.out.println("__________________________");
-
-        Contact c = findContactById(id);
-        c.getAddresses().stream().map( addr -> addr.getAddress()).forEach(System.out::println);
-
-        c.setName("Boba");
-
-        update(c);
+        System.out.println("\n address before saving contact: "+contact.getAddress());
         
-        fetchAllContacts().stream().forEach(System.out::println);
-
-        c = findContactById(1);
-
-        delete(c);
-      
-        fetchAllContacts().stream().forEach(System.out::println);
+        contact.setAddress(a);
+        save(contact);
         
+        contact = findContactById(contact.getId());
         
-System.out.println("karamba");
+        System.out.println("\n address after save and fetch of contact: "+contact.getAddress());
+
+        
 }
 
     private static Contact findContactById(long id) {
@@ -114,7 +101,7 @@ System.out.println("karamba");
         return contacts;
     }
 
-    private static long save(Contact contact) {
+    private static <T> long save(T contact) {
         // Open a session
         Session session = sessionFactory.openSession();
 

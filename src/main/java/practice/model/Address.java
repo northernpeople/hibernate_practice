@@ -1,9 +1,16 @@
 package practice.model;
 
-import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-@Embeddable
+@Entity
 public class Address {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)	
+	private Long id;
 	
 	private String address;
 
@@ -20,6 +27,23 @@ public class Address {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Address [id=").append(id).append(", address=").append(address).append("]");
+		return builder.toString();
+	}
+	
+	
 	
 	
 	
