@@ -1,4 +1,4 @@
-2017-02-21 14:10:07 database: flush
+2017-02-22 11:48:22 database: flush
 org.h2.message.DbException: General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/stepan.razdobarov/workspace/hb_practice/data/contactmgr.mv.db [1.4.191/7]" [50000-191]
 	at org.h2.message.DbException.get(DbException.java:168)
 	at org.h2.message.DbException.convert(DbException.java:295)
@@ -49,8 +49,8 @@ org.h2.message.DbException: General error: "java.lang.IllegalStateException: The
 	at org.hibernate.boot.internal.MetadataBuilderImpl.build(MetadataBuilderImpl.java:418)
 	at org.hibernate.boot.internal.MetadataBuilderImpl.build(MetadataBuilderImpl.java:87)
 	at org.hibernate.boot.MetadataSources.buildMetadata(MetadataSources.java:179)
-	at practice.Main.buildSessionFactory(Main.java:19)
-	at practice.Main.<clinit>(Main.java:15)
+	at practice.Main.buildSessionFactory(Main.java:20)
+	at practice.Main.<clinit>(Main.java:16)
 Caused by: org.h2.jdbc.JdbcSQLException: General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/stepan.razdobarov/workspace/hb_practice/data/contactmgr.mv.db [1.4.191/7]" [50000-191]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
 	... 51 more

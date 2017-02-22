@@ -7,9 +7,12 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.service.ServiceRegistry;
 
+import practice.model.Address;
 import practice.model.Contact;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Main {
     private static final SessionFactory sessionFactory = buildSessionFactory();
@@ -22,11 +25,20 @@ public class Main {
     public static void main(String[] args) {
         Contact contact = new Contact();
         contact.setName("John");
+        Address a = new Address("2345 Amsterdam ave.");
+        Address b = new Address("asdfas2123451234 m ave.");
+        contact.getAddresses().add(a);
+        contact.getAddresses().add(b);
         long id = save(contact);
+        
+        System.out.println("__________________________" +  fetchAllContacts().size());
 
         fetchAllContacts().stream().forEach(System.out::println);
 
+        System.out.println("__________________________");
+
         Contact c = findContactById(id);
+        c.getAddresses().stream().map( addr -> addr.getAddress()).forEach(System.out::println);
 
         c.setName("Boba");
 
@@ -86,7 +98,7 @@ System.out.println("karamba");
     }
 
     @SuppressWarnings("unchecked")
-    private static List<Contact> fetchAllContacts() {
+    private static Set<Contact> fetchAllContacts() {
         // Open a session
         Session session = sessionFactory.openSession();
 
@@ -94,7 +106,7 @@ System.out.println("karamba");
         Criteria criteria = session.createCriteria(Contact.class);
 
         // Get a list of Contact objects according to the Criteria object
-        List<Contact> contacts = criteria.list();
+        Set<Contact> contacts = new HashSet<>(criteria.list());
 
         // Close the session
         session.close();
@@ -110,7 +122,7 @@ System.out.println("karamba");
         session.beginTransaction();
 
         // Use the session to save the contact
-        long id = (long )session.save(contact);
+        long id = (Long) session.save(contact);
 
         // Commit the transaction
         session.getTransaction().commit();
