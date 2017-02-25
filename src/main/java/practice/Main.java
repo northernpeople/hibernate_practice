@@ -22,26 +22,32 @@ public class Main {
     public static void main(String[] args) {
         Contact contact = new Contact();
         contact.setName("John");
+        contact.getTags().add("tag1");
+        contact.getTags().add("tag2");
         long id = save(contact);
-
+        
         fetchAllContacts().stream().forEach(System.out::println);
 
+
         Contact c = findContactById(id);
-
         c.setName("Boba");
-
+        c.getTags().add("floppity");
+        c.getTags().remove("tag1");
+        update(c);
+        
+        fetchAllContacts().stream().forEach(System.out::println);
+        
+        
+        c = findContactById(id);
+        c.getTags().clear();
         update(c);
         
         fetchAllContacts().stream().forEach(System.out::println);
 
-        c = findContactById(1);
-
-        delete(c);
-      
-        fetchAllContacts().stream().forEach(System.out::println);
         
         
-System.out.println("karamba");
+        
+        System.out.println("done");
 }
 
     private static Contact findContactById(long id) {

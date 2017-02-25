@@ -1,5 +1,8 @@
 package practice.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.*;
 
 @Entity
@@ -9,6 +12,9 @@ public class Contact {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	private Long id;
 	private String name;
 	private String phone;
+	
+	@ElementCollection(fetch= FetchType.EAGER)
+	private Set<String> tags = new HashSet<>();
 	
 	public Contact() {}
 	
@@ -30,14 +36,23 @@ public class Contact {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+	
+	
+
+	public Set<String> getTags() {
+		return tags;
+	}
+
+	public void setTags(Set<String> tags) {
+		this.tags = tags;
+	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Contact [id=").append(id).append(", name=").append(name).append(", phone=").append(phone)
-				.append("]");
-		return builder.toString();
+		return "Contact [id=" + id + ", name=" + name + ", phone=" + phone + ", tags=" + tags + "]";
 	}
+	
+	
 	
 	
 }
