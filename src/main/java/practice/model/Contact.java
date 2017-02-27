@@ -1,11 +1,16 @@
 package practice.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Contact {
@@ -16,8 +21,8 @@ public class Contact {
 	private String name;
 	private String phone;
 	
-	@ManyToOne
-	private  Address address;
+	@ManyToMany(mappedBy="contacts", fetch = FetchType.EAGER)
+	private  Set<Address> addresses = new HashSet<>();
 	
 	public Contact() {}
 	
@@ -40,12 +45,12 @@ public class Contact {
 		this.phone = phone;
 	}
 
-	public Address getAddress() {
-		return address;
+	public Set<Address> getAddress() {
+		return addresses;
 	}
 
-	public void setAddress(Address address) {
-		this.address = address;
+	public void setAddress(Set<Address> address) {
+		this.addresses = address;
 	}
 
 	@Override
@@ -55,6 +60,7 @@ public class Contact {
 				.append("]");
 		return builder.toString();
 	}
+
 
 	@Override
 	public int hashCode() {

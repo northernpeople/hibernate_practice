@@ -1,5 +1,8 @@
 package practice;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,10 +12,6 @@ import org.hibernate.service.ServiceRegistry;
 
 import practice.model.Address;
 import practice.model.Contact;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 public class Main {
     private static final SessionFactory sessionFactory = buildSessionFactory();
@@ -26,24 +25,32 @@ public class Main {
         
     	Contact contact = new Contact();
         contact.setName("John");
-        contact.setId(save(contact));
+        contact.setId(save(contact));                                            // save
         
         Address a = new Address("2345 Amsterdam ave.");
-        a.setId(save(a));
+        link(contact, a);
+
+        save(a); 															// save
         
-        System.out.println("\n address before saving contact: "+contact.getAddress());
         
-        contact.setAddress(a);
-        save(contact);
+        
+        
         
         contact = findContactById(contact.getId());
+
         
-        System.out.println("\n address after save and fetch of contact: "+contact.getAddress());
+        System.out.println("\nsaved contact and refetched by id, here is it's addresses: ");
+        contact.getAddress().stream().forEach(System.out::println);
 
         
 }
 
-    private static Contact findContactById(long id) {
+    private static void link(Contact contact, Address a) {
+		contact.getAddress().add(a);
+		a.getContacts().add(contact);
+	}
+
+	private static Contact findContactById(long id) {
         Session session = sessionFactory.openSession();
         Contact contact = session.get(Contact.class,id);
         session.close();
